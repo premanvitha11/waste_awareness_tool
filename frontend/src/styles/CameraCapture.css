@@ -1,0 +1,143 @@
+/* Camera Capture Styles */
+.camera-capture {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.camera-capture h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.capture-container {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.camera-view {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.camera-view video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.camera-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.camera-controls .btn {
+  flex: 1;
+  max-width: 150px;
+}
+
+.preview-container {
+  text-align: center;
+  position: relative;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 500px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.preview-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.processing {
+  color: #667eea;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.info-section {
+  background: #e8f5e9;
+  border-left: 4px solid #4CAF50;
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+
+.info-section h3 {
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.info-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.info-section li {
+  color: #333;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.info-section li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .camera-capture {
+    padding: 1rem;
+  }
+
+  .capture-container {
+    padding: 1rem;
+    min-height: 300px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .btn {
+    width: 100%;
+  }
+
+  .camera-controls {
+    flex-direction: column;
+  }
+
+  .camera-controls .btn {
+    max-width: 100%;
+  }
+}
