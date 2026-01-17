@@ -25,14 +25,26 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialize the waste classifier and RAG system
+classifier = None
+rag_system = None
+
 try:
+    logger.info("Initializing Waste Classifier...")
     classifier = WasteClassifier()
-    rag_system = WasteRAG()
-    logger.info("Waste classifier and RAG system initialized successfully")
+    logger.info("Waste Classifier initialized successfully")
 except Exception as e:
-    logger.error(f"Error initializing systems: {e}")
-    classifier = None
-    rag_system = None
+    logger.error(f"Error initializing Waste Classifier: {e}")
+    import traceback
+    traceback.print_exc()
+
+try:
+    logger.info("Initializing RAG System...")
+    rag_system = WasteRAG()
+    logger.info("RAG system initialized successfully")
+except Exception as e:
+    logger.error(f"Error initializing RAG System: {e}")
+    import traceback
+    traceback.print_exc()
 
 
 @app.route('/health', methods=['GET'])

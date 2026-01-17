@@ -73,25 +73,41 @@ class WasteClassifier:
         """Load pre-trained model with custom classification head"""
         try:
             if model_name == 'resnet50':
-                model = models.resnet50(pretrained=True)
+                # Load without weights first to avoid SSL issues
+                try:
+                    model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+                except Exception as e:
+                    logger.warning(f"Could not load ImageNet weights: {e}. Using uninitialized weights.")
+                    model = models.resnet50(weights=None)
+                
                 num_features = model.fc.in_features
                 model.fc = nn.Linear(num_features, self.num_classes)
+            
             elif model_name == 'mobilenet':
-                model = models.mobilenet_v2(pretrained=True)
+                # Load without weights first to avoid SSL issues
+                try:
+                    model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.IMAGENET1K_V1)
+                except Exception as e:
+                    logger.warning(f"Could not load ImageNet weights: {e}. Using uninitialized weights.")
+                    model = models.mobilenet_v2(weights=None)
+                
                 model.classifier[1] = nn.Linear(1280, self.num_classes)
             else:
                 raise ValueError(f"Model {model_name} not supported")
             
             model = model.to(self.device)
             
-            # Try to load pre-trained weights
+            # Try to load pre-trained waste classifier weights
             model_path = f'models/{model_name}_waste_classifier.pth'
             if os.path.exists(model_path):
-                state_dict = torch.load(model_path, map_location=self.device)
-                model.load_state_dict(state_dict)
-                logger.info(f"Loaded pre-trained weights from {model_path}")
+                try:
+                    state_dict = torch.load(model_path, map_location=self.device)
+                    model.load_state_dict(state_dict)
+                    logger.info(f"Loaded pre-trained weights from {model_path}")
+                except Exception as e:
+                    logger.warning(f"Could not load weights from {model_path}: {e}")
             else:
-                logger.warning(f"Pre-trained weights not found at {model_path}, using ImageNet weights")
+                logger.info(f"Pre-trained waste classifier weights not found at {model_path}")
             
             return model
         
